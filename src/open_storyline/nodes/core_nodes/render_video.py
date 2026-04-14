@@ -262,7 +262,7 @@ class MediaCache:
         self._include_video_audio = include_video_audio
         self._canvas_size = canvas_size
         self._clip_compose_mode = clip_compose_mode
-        self._bg_color = tuple(bg_color) if bg_color else (0, 0, 0) # RGB
+        self._bg_color = tuple(eval(bg_color) if isinstance(bg_color, str) else bg_color) if bg_color else (0, 0, 0) # RGB
 
         self._video_sources: Dict[str, VideoFileClip] = {}
         self._audio_sources: Dict[str, AudioFileClip] = {}
@@ -514,10 +514,10 @@ class PillowSubtitleRenderer:
             (SUBTITLE_PADDING_X - bbox[0], SUBTITLE_PADDING_Y - bbox[1]),
             wrapped,
             font=font,
-            fill=tuple(font_color),
+            fill=tuple(eval(font_color) if isinstance(font_color, str) else font_color),
             align="center",
             stroke_width=stroke_width,
-            stroke_fill=tuple(stroke_color),
+            stroke_fill=tuple(eval(stroke_color) if isinstance(stroke_color, str) else stroke_color),
         )
 
         rgba_arr = np.array(rgba, dtype=np.uint8)
